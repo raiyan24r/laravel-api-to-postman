@@ -355,6 +355,12 @@ class ExportPostmanCommand extends Command
 
             if (is_array($messages)) {
                 $messages = $this->handleEdgeCases($messages);
+
+                foreach ($messages as $key => $value) {
+                    if (is_array($value) && empty($value)) {
+                        $messages[$key] = 'custom: '. $rules[$key];
+                    }
+                }
             }
 
             return implode(', ', is_array($messages) ? $messages : $messages->toArray());
